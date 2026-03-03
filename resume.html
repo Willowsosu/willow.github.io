@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘舒羽 | 视觉设计师作品集</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 初始加载状态，防止闪烁 */
+        html.loading-complete body {
+            visibility: visible;
+        }
+
+        body {
+            visibility: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+
+        /* 防止字体加载时的布局偏移 */
+        html {
+            font-display: swap;
+            overflow-y: scroll;
+        }
+
+        /* 防止滚动条闪烁 */
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        /* 图片保护措施 */
+        img {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* 图片容器保护覆盖层 */
+        .image-protected {
+            position: relative;
+        }
+
+        .image-protected::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        /* 禁止图片拖拽 */
+        img {
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+
+        /* 导航栏样式 */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* 图片加载占位 */
+        img {
+            background-color: var(--bg-color);
+            min-height: 200px;
+        }
+
+        /* CSS Containment 优化渲染性能 */
+        .work-card, .purple-block, .reveal {
+            contain: layout style paint;
+        }
+
+        /* 首页过渡优化 */
+        section {
+            contain: layout style paint;
+        }
+
+        /* 防止过渡时的布局抖动 */
+        .min-h-screen {
+            min-height: 100vh;
+            contain: layout style paint;
+        }
+
+        /* 视差与入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, 
+                        transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 自定义下划线动效 */
+        .link-hover {
+            position: relative;
+            text-decoration: none;
+        }
+
+        .link-hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        .link-hover:hover::after {
+            width: 100%;
+        }
+
+        /* 作品集封面 Hover 效果 */
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.5s ease;
+        }
+
+        .work-card:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .work-img {
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .work-card:hover .work-img {
+            transform: scale(1.05);
+        }
+
+        .work-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .work-card:hover .work-overlay {
+            opacity: 1;
+        }
+
+        /* 隐藏滚动条 */
+        ::-webkit-scrollbar { width: 0px; }
+
+        /* 紫色系色块元素 */
+        .purple-block {
+            position: absolute;
+            border-radius: 20px;
+            opacity: 0.15;
+            filter: blur(80px);
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .purple-block-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 100%);
+            top: -100px;
+            right: -100px;
+        }
+
+        .purple-block-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #8A2BE2 0%, #7B68EE 100%);
+            bottom: 10%;
+            left: -50px;
+        }
+
+        .purple-block-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #BA55D3 0%, #9370DB 100%);
+            top: 40%;
+            right: -80px;
+        }
+
+        .purple-block-4 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #9370DB 0%, #6A5ACD 100%);
+            top: 20%;
+            left: 10%;
+        }
+
+        .purple-block-5 {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(135deg, #8A2BE2 0%, #9932CC 100%);
+            bottom: 5%;
+            right: 15%;
+        }
+
+        /* 可交互的紫色气泡 */
+        .interactive-purple-block {
+            position: relative;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            box-shadow: 
+                0 4px 15px rgba(147, 112, 219, 0.2),
+                inset 0 -10px 20px rgba(0, 0, 0, 0.1),
+                inset 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .interactive-purple-block::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 30%;
+            height: 20%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(2px);
+        }
+
+        .interactive-purple-block::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 50%;
+        }
+
+        .interactive-purple-block:hover::after {
+            opacity: 1;
+        }
+
+        .interactive-purple-block-1 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 50%, #7B68EE 100%);
+        }
+
+        .interactive-purple-block-2 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8A2BE2 0%, #7B68EE 50%, #6A5ACD 100%);
+        }
+
+        .interactive-purple-block-3 {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #BA55D3 0%, #9370DB 50%, #8A2BE2 100%);
+        }
+
+        .interactive-purple-block-4 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 50%, #9932CC 100%);
+        }
+
+        .interactive-purple-block-5 {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #8A2BE2 0%, #9932CC 50%, #9370DB 100%);
+        }
+
+        /* 气泡悬停效果 */
+        .interactive-purple-block:hover {
+            box-shadow: 
+                0 0 30px rgba(147, 112, 219, 0.5),
+                0 0 60px rgba(147, 112, 219, 0.3),
+                0 0 100px rgba(147, 112, 219, 0.2),
+                inset 0 -10px 20px rgba(0, 0, 0, 0.15),
+                inset 0 10px 20px rgba(255, 255, 255, 0.2);
+            transform: scale(1.15);
+            animation: bubbleFloat 2s ease-in-out infinite;
+        }
+
+        /* 气泡浮动动画 */
+        @keyframes bubbleFloat {
+            0%, 100% {
+                transform: scale(1.15) translateY(0px);
+            }
+            50% {
+                transform: scale(1.18) translateY(-8px);
+            }
+        }
+
+        /* 色块滚动视差效果 */
+        .parallax-purple {
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+
+        /* 鼠标跟随光标 */
+        .cursor-follower {
+            position: fixed;
+            width: 96px;
+            height: 96px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(147, 51, 234, 0) 45%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease-out, opacity 0.5s ease, background 0.3s ease;
+            will-change: transform;
+            mix-blend-mode: screen;
+            opacity: 0;
+            filter: drop-shadow(0 0 8px rgba(147, 51, 234, 0.5));
+        }
+
+        /* 首页文字动效 */
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 欢迎页样式 */
+        .welcome-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.7s ease-out, 
+                        transform 0.7s ease-out,
+                        filter 0.7s ease-out;
+            cursor: grab;
+            user-select: none;
+            will-change: opacity, transform, filter;
+            transform-origin: center bottom;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .welcome-screen.swiping {
+            opacity: 0;
+            transform: translateY(-25vh) scale(0.92);
+            filter: blur(15px);
+            pointer-events: none;
+        }
+
+        .welcome-content {
+            text-align: center;
+            transition: transform 0.6s ease-out, 
+                        opacity 0.6s ease-out;
+            will-change: transform, opacity;
+        }
+
+        .welcome-screen.swiping .welcome-content {
+            transform: translateY(40px) scale(0.96);
+            opacity: 0;
+        }
+
+        .welcome-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #9333EA 0%, #7B68EE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleFadeIn 1.5s ease-out 0.3s both;
+        }
+
+        .welcome-subtitle {
+            font-size: clamp(0.875rem, 2vw, 1.25rem);
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            animation: subtitleFadeIn 1.5s ease-out 0.6s both;
+        }
+
+        .welcome-hint {
+            position: absolute;
+            bottom: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            animation: hintPulse 2s ease-in-out infinite;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+
+        .welcome-hint.visible {
+            opacity: 1;
+        }
+
+        .welcome-hint-icon {
+            display: inline-block;
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #9333EA 0%, #7B68EE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: iconSlideDown 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.5));
+        }
+
+        .welcome-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .welcome-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(147, 51, 234, 0.3);
+            border-radius: 50%;
+            animation: dotFloat 6s ease-in-out infinite;
+        }
+
+        .welcome-dot:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+        .welcome-dot:nth-child(2) { top: 60%; left: 80%; animation-delay: 1s; }
+        .welcome-dot:nth-child(3) { top: 80%; left: 30%; animation-delay: 2s; }
+        .welcome-dot:nth-child(4) { top: 30%; left: 70%; animation-delay: 3s; }
+        .welcome-dot:nth-child(5) { top: 50%; left: 45%; animation-delay: 4s; }
+
+        .welcome-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .welcome-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(135deg, #9333EA 0%, #7B68EE 100%);
+            border-radius: 50%;
+            animation: particleFloat 8s ease-in-out infinite;
+        }
+
+        .welcome-particle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; width: 8px; height: 8px; }
+        .welcome-particle:nth-child(2) { top: 20%; left: 90%; animation-delay: 1s; width: 4px; height: 4px; }
+        .welcome-particle:nth-child(3) { top: 40%; left: 20%; animation-delay: 2s; width: 6px; height: 6px; }
+        .welcome-particle:nth-child(4) { top: 70%; left: 80%; animation-delay: 3s; width: 5px; height: 5px; }
+        .welcome-particle:nth-child(5) { top: 85%; left: 30%; animation-delay: 4s; width: 7px; height: 7px; }
+        .welcome-particle:nth-child(6) { top: 50%; left: 60%; animation-delay: 5s; width: 4px; height: 4px; }
+        .welcome-particle:nth-child(7) { top: 30%; left: 50%; animation-delay: 6s; width: 5px; height: 5px; }
+        .welcome-particle:nth-child(8) { top: 90%; left: 70%; animation-delay: 7s; width: 6px; height: 6px; }
+
+        .welcome-ripple {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .welcome-ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, transparent 70%);
+            animation: ripple 3s ease-out infinite;
+        }
+
+        @keyframes titleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes subtitleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes hintPulse {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes iconSlideDown {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(5px);
+            }
+        }
+
+        @keyframes dotFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            25% {
+                transform: translate(100px, -100px) rotate(90deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(200px, 0) rotate(180deg);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translate(100px, 100px) rotate(270deg);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 欢迎页 -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-dots">
+            <div class="welcome-dot"></div>
+            <div class="welcome-dot"></div>
+            <div class="welcome-dot"></div>
+            <div class="welcome-dot"></div>
+            <div class="welcome-dot"></div>
+        </div>
+        <div class="welcome-particles">
+            <div class="welcome-particle"></div>
+            <div class="welcome-particle"></div>
+            <div class="welcome-particle"></div>
+            <div class="welcome-particle"></div>
+            <div class="welcome-particle"></div>
+            <div class="welcome-particle"></div>
+            <div class="welcome-particle"></div>
+            <div class="welcome-particle"></div>
+        </div>
+        <div class="welcome-ripple"></div>
+        <div class="welcome-content">
+            <h1 class="welcome-title">WELCOME</h1>
+            <p class="welcome-subtitle">刘舒羽作品集 PORTFOLIO 2026</p>
+        </div>
+        <div id="welcome-hint" class="welcome-hint">
+            <span class="welcome-hint-icon">↓</span>
+        </div>
+    </div>
+
+    <!-- 鼠标跟随光标 -->
+    <div id="cursor-follower" class="cursor-follower"></div>
+
+    <!-- 极简导航 -->
+    <nav class="fixed top-0 w-full z-50 p-6 md:p-10 flex justify-between items-center mix-blend-difference transition-opacity duration-700" id="main-nav" style="opacity: 0;">
+        <a href="#" class="text-lg font-bold tracking-tighter uppercase">Shuyu Liu.</a>
+        <div class="flex space-x-8 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium">
+            <a href="#work" class="link-hover">作品 / Work</a>
+            <a href="#about" class="link-hover">背景 / About</a>
+            <a href="#contact" class="link-hover">联系 / Contact</a>
+        </div>
+    </nav>
+
+    <!-- 第一页：首页 (Hero Section) -->
+    <section class="min-h-screen flex flex-col justify-center px-6 md:px-16 pt-20 md:pt-32 relative overflow-hidden">
+        <!-- 装饰性紫色色块背景 -->
+        <div class="purple-block purple-block-1 parallax-purple"></div>
+        <div class="purple-block purple-block-2 parallax-purple"></div>
+        <div class="purple-block purple-block-4 parallax-purple"></div>
+        
+        <!-- 使用 items-center 确保左右对齐高度一致 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center w-full relative z-10">
+            
+            <!-- 左侧内容列 -->
+            <div class="lg:col-span-7 reveal">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-[0.9] tracking-tighter mb-6">
+                    <span class="text-[#9333EA]">Hello</span><br>
+                    <span class="mt-4 inline-block">我是刘舒羽</span>
+                </h1>
+                <div class="space-y-4 max-w-xl">
+                    <p class="text-sm md:text-base text-zinc-400 leading-relaxed">
+                        设计专业出身，艺术功底强，审美好，具备较好逻辑思维能力。精通各类设计软件及 AIGC 工具，擅长结合品牌调性进行跨领域视觉设计。
+                    </p>
+                    <p class="text-sm md:text-base text-zinc-400 leading-relaxed">
+                        具备多个领域的设计经验，包括金融、建筑、景观、游戏等。擅长针对不同目标用户提供优质视觉方案。
+                    </p>
+                </div>
+                
+                <div class="mt-8 space-y-3 reveal" style="transition-delay: 0.1s;">
+                    <div class="text-sm tracking-widest">
+                        <p><span class="opacity-30">年龄：</span>24岁</p>
+                    </div>
+                    <div class="text-sm tracking-widest">
+                        <p><span class="opacity-30">电话：</span>18051583183</p>
+                    </div>
+                    <div class="text-sm tracking-widest">
+                        <p><span class="opacity-30">微信：</span>willowwww</p>
+                    </div>
+                    <div class="text-sm tracking-widest">
+                        <p><span class="opacity-30">邮箱：</span>liushuyu01@foxmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧照片占位 - 调整比例以适应文字高度 -->
+            <div class="lg:col-span-5 reveal flex items-stretch justify-end" style="transition-delay: 0.2s;">
+                <div class="h-full bg-zinc-900 rounded-2xl overflow-hidden border border-white/5 group relative shadow-2xl" style="aspect-ratio: 3 / 4; max-width: 100%;">
+                    <img src="个人照片.jpg" alt="刘舒羽个人照片" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部滚动提示词 -->
+        <div class="mt-16 border-t border-white/5 pt-8 overflow-hidden">
+            <div class="flex space-x-12 text-[10px] uppercase tracking-[0.5em] opacity-20">
+                <div class="marquee">
+                    VISUAL DESIGN / AIGC / BRAND DESIGN / UI DESIGN / DESIGN PORTFOLIO / BRAND IDENTITY / UI/UX / VISUAL STRATEGY / &nbsp;
+                    VISUAL DESIGN / AIGC / BRAND DESIGN / UI DESIGN / DESIGN PORTFOLIO / BRAND IDENTITY / UI/UX / VISUAL STRATEGY / &nbsp;
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二页：作品展示 (Portfolio Section) -->
+    <section id="work" class="min-h-screen px-6 md:px-16 py-32 bg-zinc-950/30 relative overflow-hidden">
+        <!-- 装饰性紫色色块背景 -->
+        <div class="purple-block purple-block-3 parallax-purple"></div>
+        <div class="purple-block purple-block-5 parallax-purple"></div>
+        
+        <div class="flex flex-col md:flex-row justify-between items-baseline mb-20 reveal relative z-10">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-[0.9] tracking-tighter">作品展示 / PORTFOLIO DISPLAY</h2>
+        </div>
+
+        <!-- 作品网格 (1920x1080 比例入口) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+            <!-- 案例 1: 醒图 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('醒图 - 节日派对系列', '醒图针对重要节日节点用户社交分享需求旺盛、需要高质量图片素材的痛点，依托自身图片编辑核心优势，以模板为核心资产，发起模板征集大赛。目标在于通过现金奖励与流量扶持，激励创作者制作应景优质内容，丰富平台模板库，解决用户每逢节日愁P图的痛点；同时借势节日自带流量和话题属性，是天然的营销热点。围绕固定节日开展活动，可以有效降低用户的认知成本，提高活动参与意愿，并形成可预测、可复制的年度活动IP，持续强化醒图节日图片创作第一选择的品牌心智。', '虚拟项目 - Blender建模', '2.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面1.png" alt="醒图" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">醒图 - 节日派对系列</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">虚拟项目 - Blender建模</p>
+                </div>
+            </div>
+
+            <!-- 案例 2: 乐森机器人 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('抖音直播 - 星动之音', '主导超20套欧洲市场营销物料设计，保障品牌视觉统一性。', '虚拟项目 - AIGC', '3.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面2.png" alt="乐森机器人" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">抖音直播 - 星动之音</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">虚拟项目 - AIGC</p>
+                </div>
+            </div>
+
+            <!-- 案例 3: 趣丸网络 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('微博 - 十一出行记', '深度参与游戏内容本地化适配，策划UGC活动使内容增长85%。', '虚拟项目 - AIGC', '4.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面3.png" alt="趣丸网络" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">微博 - 十一出行记</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">虚拟项目 - AIGC</p>
+                </div>
+            </div>
+
+            <!-- 案例 4: 社区花园 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('快手 - 狂欢世俱杯', '主导品牌视觉设计，将自然理念转化为可视化图形，输出图纸20+页。', '虚拟项目 - Blender建模', '5.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面4.png" alt="社区花园" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">快手 - 狂欢世俱杯</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">虚拟项目 - Blender建模</p>
+                </div>
+            </div>
+
+            <!-- 案例 5: 3D 视觉探索 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('小红书 - 好果子研究所', '探索 3D 建模与质感表现，结合 AIGC 打造未来感视觉叙事。', '虚拟项目 - 手绘+视觉设计', '6.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面5.png" alt="3D视觉探索" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">小红书 - 好果子研究所</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">虚拟项目 - 手绘+视觉设计</p>
+                </div>
+            </div>
+
+            <!-- 案例 6: UI 组件系统 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('美团 - 安心吃门店维度签约', '针对复杂金融场景构建的标准化 UI 组件库，提升协作效率。', '实习项目 - UI设计', '8.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面6.png" alt="UI组件系统" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">美团 - 安心吃门店维度签约</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">实习项目 - UI设计</p>
+                </div>
+            </div>
+
+            <!-- 案例 7: 美团实习产出 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('美团实习产出 - 公众号', '美团实习期间的公众号视觉设计产出。', '实习项目 - 视觉设计', '7.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面7.png" alt="美团实习产出" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">美团实习产出 - 公众号</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">实习项目 - 视觉设计</p>
+                </div>
+            </div>
+
+            <!-- 案例 8: 乐森实习产出 -->
+            <div class="work-card reveal aspect-[16/9] group cursor-pointer" onclick="openModal('乐森实习产出', '乐森实习期间的设计产出。', '实习项目 - 视觉设计', '9.png')">
+                <div class="absolute inset-0 bg-zinc-900 work-img">
+                    <img src="封面8.png" alt="乐森实习产出" class="w-full h-full object-cover">
+                </div>
+                <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-2xl font-bold mb-2">乐森实习产出</h3>
+                    <p class="text-xs opacity-60 uppercase tracking-widest">实习项目 - 视觉设计</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三页：关于与经历 (About Section) -->
+    <section id="about" class="px-6 md:px-16 py-32 relative overflow-hidden">
+        <!-- 装饰性紫色色块背景 -->
+        <div class="purple-block purple-block-1 parallax-purple"></div>
+        <div class="purple-block purple-block-4 parallax-purple" style="top: 60%; left: 30%;"></div>
+
+        <!-- 学历与经历 -->
+        <div class="reveal relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12" style="transition-delay: 0.2s;">
+            <!-- 左侧文字内容 -->
+            <div>
+                <div class="text-sm tracking-widest mb-8">
+                    <p><span class="opacity-30">教育背景 / Education</span></p>
+                </div>
+                <div class="space-y-4 text-base font-sans leading-relaxed">
+                    <!-- 教育经历 -->
+                    <div>
+                        <p class="font-bold">2024.09-2027.03 —— 哈尔滨工业大学（深圳）     设计学     硕士（985院校）</p>
+                        <p class="font-bold mt-3">2020.09-2024.06 —— 厦门大学     环境设计     本科（985院校）</p>
+                    </div>
+                </div>
+
+                <div class="text-sm tracking-widest mb-8 mt-12">
+                    <p><span class="opacity-30">实习经历 / Internship</span></p>
+                </div>
+                <div class="space-y-4 text-base font-sans leading-relaxed">
+                    <!-- 实习经历1 -->
+                    <div>
+                        <p class="font-bold">2025.10-2026.02 —— 美团（北京三快在线科技有限公司）     体验设计实习生</p>
+                    </div>
+
+                    <!-- 实习经历2 -->
+                    <div>
+                        <p class="font-bold">2025.06-2025.08 —— 乐森机器人有限公司     设计实习生</p>
+                    </div>
+
+                    <!-- 实习经历3 -->
+                    <div>
+                        <p class="font-bold">2024.06-2024.08 —— 广州趣丸网络科技有限公司     海外运营实习生</p>
+                    </div>
+                </div>
+
+                <div class="text-sm tracking-widest mb-8 mt-12">
+                    <p><span class="opacity-30">校园经历 / Campus Experience</span></p>
+                </div>
+                <div class="space-y-4 text-base font-sans leading-relaxed">
+                    <!-- 校园经历 -->
+                    <div>
+                        <p class="font-bold">2025.03-2025.05 —— 大学城社区共建花园改造     景观设计 & 视觉设计</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧A4占位格 -->
+            <div class="flex items-stretch justify-end">
+                <div class="work-card reveal relative overflow-hidden cursor-pointer group h-full" style="max-width: 100%; aspect-ratio: 1 / 1.414;" onclick="openResumeImage()">
+                    <div class="absolute inset-0 bg-zinc-900 work-img">
+                        <img src="简历0224版.png" alt="简历封面" class="w-full h-full object-cover">
+                    </div>
+                    <div class="work-overlay absolute inset-0 p-8 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold mb-2">简历</h3>
+                        <p class="text-xs opacity-60 uppercase tracking-widest">Resume</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 简历图片全屏模态框 -->
+    <div id="resume-modal" class="fixed inset-0 z-[100] bg-black/95 hidden opacity-0 transition-all duration-300 overflow-y-auto">
+        <button class="fixed bottom-6 right-6 z-[101] w-16 h-16 rounded-full bg-[#9333EA] flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-[#7C22C9] hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/40 active:scale-95" onclick="closeResumeModal()" aria-label="关闭">
+            <span class="text-white text-3xl font-medium leading-none tracking-tight" style="line-height: 1;">×</span>
+        </button>
+        <div class="w-full min-h-screen flex flex-col items-center pt-0">
+            <div class="w-full flex justify-center">
+                <img id="resume-image" src="简历0224版.png" alt="简历" class="max-w-none" style="width: 96%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚：联系方式 (Contact Section) -->
+    <footer id="contact" class="px-6 md:px-16 py-32 bg-zinc-900/20 text-center relative overflow-hidden">
+        <!-- 装饰性紫色色块背景 -->
+        <div class="purple-block purple-block-2 parallax-purple"></div>
+        <div class="purple-block purple-block-5 parallax-purple" style="top: 20%; right: 5%;"></div>
+        
+        <h2 class="reveal text-4xl md:text-5xl lg:text-6xl font-black leading-[0.9] tracking-tighter mb-12 relative z-10">
+            <a href="mailto:liushuyu01@foxmail.com">感谢观看！</a>
+        </h2>
+        <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-8 text-xs tracking-widest pt-20 border-t border-white/5 relative z-10">
+            <div>
+                <p class="opacity-30 mb-2">邮箱</p>
+                <p>liushuyu01@foxmail.com</p>
+            </div>
+            <div>
+                <p class="opacity-30 mb-2">电话</p>
+                <p>18051583183</p>
+            </div>
+            <div>
+                <p class="opacity-30 mb-2">微信</p>
+                <p>willowwww</p>
+            </div>
+            <div>
+                <p class="opacity-30 mb-2">Base地</p>
+                <p>Shenzhen</p>
+            </div>
+        </div>
+        <p class="mt-20 text-[9px] opacity-20 tracking-[0.5em]">© 2026 SHUYU LIU. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- 全屏作品模态框 -->
+    <div id="modal" class="fixed inset-0 z-[100] bg-black/95 hidden opacity-0 overflow-y-auto transition-all duration-500">
+        <button class="fixed bottom-6 right-6 z-[101] w-16 h-16 rounded-full bg-[#9333EA] flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-[#7C22C9] hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/40 active:scale-95" onclick="closeModal()" aria-label="关闭">
+            <span class="text-white text-3xl font-medium leading-none tracking-tight" style="line-height: 1;">×</span>
+        </button>
+        <div class="min-h-screen flex flex-col items-center p-6 py-20">
+            <div class="w-full max-w-full text-center">
+                <div class="w-full">
+                    <img id="modal-image" src="2.png" alt="作品展示" class="w-full h-auto object-contain">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后显示内容，防止闪烁
+        window.addEventListener('load', () => {
+            document.documentElement.classList.add('loading-complete');
+        });
+
+        // 如果页面已经加载完成（缓存情况），立即显示
+        if (document.readyState === 'complete') {
+            document.documentElement.classList.add('loading-complete');
+        }
+
+        // 视差与入场动画观察者
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // 模态框逻辑
+        function openModal(title, desc, tag = '', imageSrc = '2.png') {
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-image').src = imageSrc;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500);
+        }
+
+        // 简单的鼠标视差交互（首页肖像）
+        document.addEventListener('mousemove', (e) => {
+            const portrait = document.querySelector('.group');
+            if(portrait) {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.005;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.005;
+                portrait.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+
+        // 紫色色块滚动视差效果
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-purple');
+            
+            parallaxElements.forEach((el, index) => {
+                const speed = (index + 1) * 0.05;
+                const yPos = -(scrolled * speed);
+                el.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+
+        // 气泡悬停动态效果
+        document.querySelectorAll('.interactive-purple-block').forEach(bubble => {
+            bubble.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+            });
+            
+            bubble.addEventListener('mouseleave', function() {
+                this.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            });
+        });
+
+        // 鼠标跟随光标效果
+        const cursorFollower = document.getElementById('cursor-follower');
+        let mouseX = 0;
+        let mouseY = 0;
+        let followerX = 0;
+        let followerY = 0;
+        let isMoving = false;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            isMoving = true;
+        });
+
+        function updateCursorFollower() {
+            if (isMoving) {
+                const dx = mouseX - followerX;
+                const dy = mouseY - followerY;
+                
+                followerX += dx * 0.35;
+                followerY += dy * 0.35;
+                
+                cursorFollower.style.left = followerX + 'px';
+                cursorFollower.style.top = followerY + 'px';
+                
+                if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+                    isMoving = false;
+                }
+            }
+            
+            requestAnimationFrame(updateCursorFollower);
+        }
+
+        requestAnimationFrame(updateCursorFollower);
+
+        // 鼠标悬停在可点击元素上时放大光标
+        const hoverElements = document.querySelectorAll('a, button, .work-card, .cursor-pointer');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.3)';
+                cursorFollower.style.background = 'radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(147, 51, 234, 0) 45%, transparent 70%)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.background = 'radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(147, 51, 234, 0) 45%, transparent 70%)';
+            });
+        });
+
+        // 鼠标离开窗口时隐藏光标
+        document.addEventListener('mouseleave', () => {
+            cursorFollower.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorFollower.style.opacity = '1';
+        });
+
+        // 欢迎页滑动检测
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const welcomeHint = document.getElementById('welcome-hint');
+        let touchStartY = 0;
+        let hasInteracted = false;
+        let wheelAccumulator = 0;
+
+        function showWelcomeHint() {
+            setTimeout(() => {
+                if (!hasInteracted && welcomeHint) {
+                    welcomeHint.classList.add('visible');
+                }
+            }, 2000);
+        }
+
+        function dismissWelcomeScreen() {
+            if (hasInteracted) return;
+            hasInteracted = true;
+            
+            welcomeScreen.classList.add('swiping');
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 700);
+            
+            requestAnimationFrame(() => {
+                window.scrollTo(0, 0);
+                document.body.style.overflow = '';
+            });
+            
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    el.classList.add('active');
+                });
+                
+                document.getElementById('main-nav').style.opacity = '1';
+                
+                document.getElementById('cursor-follower').style.opacity = '1';
+            }, 500);
+        }
+
+        // 鼠标滚轮检测
+        welcomeScreen.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            wheelAccumulator += e.deltaY;
+            
+            if (wheelAccumulator > 150) {
+                dismissWelcomeScreen();
+                wheelAccumulator = 0;
+            }
+        }, { passive: false });
+
+        // 触摸滑动检测
+        welcomeScreen.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: false });
+
+        welcomeScreen.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touchEndY = e.touches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            
+            if (diff < -150) {
+                dismissWelcomeScreen();
+            }
+        }, { passive: false });
+
+        // 鼠标拖拽检测
+        let isDragging = false;
+        let dragStartY = 0;
+
+        welcomeScreen.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStartY = e.clientY;
+            welcomeScreen.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const diff = dragStartY - e.clientY;
+            
+            if (diff < -200) {
+                dismissWelcomeScreen();
+                isDragging = false;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            welcomeScreen.style.cursor = 'grab';
+        });
+
+        // 键盘检测
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                dismissWelcomeScreen();
+            }
+        });
+
+        // 初始化欢迎提示
+        showWelcomeHint();
+
+        // 图片保护措施 - 禁用右键保存
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }, false);
+
+        // 简历图片模态框功能
+        const resumeModal = document.getElementById('resume-modal');
+
+        function openResumeImage() {
+            resumeModal.classList.remove('hidden');
+            setTimeout(() => {
+                resumeModal.classList.add('opacity-100');
+            }, 10);
+        }
+
+        function closeResumeModal() {
+            resumeModal.classList.remove('opacity-100');
+            setTimeout(() => {
+                resumeModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !resumeModal.classList.contains('hidden')) {
+                closeResumeModal();
+            }
+        });
+    </script>
+</body>
+</html>
